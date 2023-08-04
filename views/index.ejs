@@ -1,0 +1,41 @@
+<%-include("./partials/header.ejs")%>
+
+<div class="mainDiv" id="headDiv">
+    <h1 class="heading"><%=currDay%>,<%=currMonth%> <%=currDate%></h1>
+</div>
+<%if(locals.list){%>
+    <%for(var i=0;i<list.length;i++){%>
+        <div class="mainDiv" id="newItems">
+            <input type="checkbox" data-indexcb="<%=i%>">
+            <p style="color: aliceblue;" <%if(i===0){%> class="addBorder"<%}%> ><%=list[i].task%></p>
+        </div>
+    <%}%>
+<%}%>
+<form action="/" method="post">
+    <div class="mainDiv" id="bodyDiv">
+        <input type="text" name="newItem" placeholder="New Task" autocomplete="off" class="mainDiv" id="inputTab">
+        <button><img src="plus.png" alt=""></button>
+    </div>
+</form>
+<script>
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    const paraForBorder = document.querySelectorAll('#newItems p');
+    
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            const index = this.dataset.indexcb;
+            const paragraph = document.querySelectorAll('#newItems p')[index];
+            
+            if (this.checked) {
+                paragraph.classList.add('taskOver');
+            } else { 
+                paragraph.classList.remove('taskOver');
+            }
+            
+        });
+    });
+ 
+    
+
+</script>
+<%-include("partials/footer.ejs")%>
